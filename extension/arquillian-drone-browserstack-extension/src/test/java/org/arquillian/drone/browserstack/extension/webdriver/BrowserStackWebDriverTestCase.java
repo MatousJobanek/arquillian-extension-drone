@@ -19,7 +19,6 @@ package org.arquillian.drone.browserstack.extension.webdriver;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
@@ -40,13 +39,13 @@ public class BrowserStackWebDriverTestCase {
     WebDriver driver;
 
     @Test
-    @Ignore("All the BrowserStack tests are ignored, because of missing username and access key to some active account - see arquillian.xml.")
+//    @Ignore("All the BrowserStack tests are ignored, because of missing username and access key to some active account - see arquillian.xml.")
     public void browserTest() {
         runTest(driver);
     }
 
     @Test
-    @Ignore("All the BrowserStack tests are ignored, because of missing username and access key to some active account - see arquillian.xml.")
+//    @Ignore("All the BrowserStack tests are ignored, because of missing username and access key to some active account - see arquillian.xml.")
     public void browserTest(@Drone final WebDriver driver) {
         runTest(driver);
     }

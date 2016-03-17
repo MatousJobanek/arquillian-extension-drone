@@ -26,7 +26,6 @@ import org.jboss.arquillian.junit.InSequence;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
@@ -59,7 +58,7 @@ public class LocalhostWebDriverTestCase {
 
     @Test
     @InSequence(1)
-    @Ignore("All the BrowserStack tests are ignored, because of missing username and access key to some active account - see arquillian.xml.")
+//    @Ignore("All the BrowserStack tests are ignored, because of missing username and access key to some active account - see arquillian.xml.")
     public void login() throws InterruptedException {
         LoginPage page = new LoginPage(driver, contextPath);
         page.login(USERNAME, PASSWORD);
@@ -67,7 +66,7 @@ public class LocalhostWebDriverTestCase {
 
     @Test
     @InSequence(2)
-    @Ignore("All the BrowserStack tests are ignored, because of missing username and access key to some active account - see arquillian.xml.")
+//    @Ignore("All the BrowserStack tests are ignored, because of missing username and access key to some active account - see arquillian.xml.")
     public void logout() {
         LoginPage page = new LoginPage(driver, contextPath);
         page.logout();
