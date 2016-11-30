@@ -52,6 +52,9 @@ class MockBrowserCapabilitiesRegistry implements BrowserCapabilitiesRegistry {
         else if ("safari".equals(browser)) {
             registerBrowserCapabilitiesFor(browser, new BrowserCapabilitiesList.Safari());
         }
+        else if ("edge".equals(browser)) {
+            registerBrowserCapabilitiesFor(browser, new BrowserCapabilitiesList.Edge());
+        }
         else {
             Assert.fail("MockBrowserCapabilitiesRegistry does not implement " + browser);
         }

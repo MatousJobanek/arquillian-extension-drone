@@ -33,5 +33,6 @@ public class Constants {
     public static final String REMOTE_DRIVER = "org.openqa.selenium.remote.RemoteWebDriver";
     public static final String SAFARI_DRIVER = "org.openqa.selenium.safari.SafariDriver";
     public static final String PHANTOMJS_DRIVER = "org.openqa.selenium.phantomjs.PhantomJSDriver";
+    public static final String EDGE_DRIVER = "org.openqa.selenium.edge.EdgeDriver";
 
 }

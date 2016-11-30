@@ -111,6 +111,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-edge-driver</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
         <!-- test dependencies -->
         <dependency>
@@ -198,12 +203,12 @@
             <properties>
                 <selenium.chrome.driver>org.seleniumhq.selenium:selenium-chrome-driver:jar</selenium.chrome.driver>
                 <selenium.firefox.driver>org.seleniumhq.selenium:selenium-firefox-driver</selenium.firefox.driver>
-                <selenium.htmlunit.driver>org.seleniumhq.selenium:htmlunit-driver:jar
-                </selenium.htmlunit.driver>
+                <selenium.htmlunit.driver>org.seleniumhq.selenium:htmlunit-driver:jar</selenium.htmlunit.driver>
                 <selenium.ie.driver>org.seleniumhq.selenium:selenium-ie-driver:jar</selenium.ie.driver>
                 <selenium.safari.driver>org.seleniumhq.selenium:selenium-safari-driver:jar</selenium.safari.driver>
                 <codeborne.phantomjs.driver>com.codeborne:phantomjsdriver:jar</codeborne.phantomjs.driver>
                 <opera.opera.driver>com.opera:operadriver</opera.opera.driver>
+                <selenium.edge.driver>org.seleniumhq.selenium:selenium-edge-driver</selenium.edge.driver>
             </properties>
 
             <dependencies>
@@ -258,8 +263,8 @@
                                         <requireProperty>
                                             <property>browser</property>
                                             <message>browser property must be specified!</message>
-                                            <regex>firefox|android|htmlUnit|safari|chrome|opera|phantomjs|iphone|internetExplorer</regex>
-                                            <regexMessage>-Dbrowser must be one of: firefox, android, htmlUnit, safari, chrome, opera, phantomjs, iphone, internetExplorer but was ${browser}</regexMessage>
+                                            <regex>firefox|android|htmlUnit|safari|chrome|opera|phantomjs|iphone|internetExplorer|edge</regex>
+                                            <regexMessage>-Dbrowser must be one of: firefox, android, htmlUnit, safari, chrome, opera, phantomjs, iphone, internetExplorer, edge but was ${browser}</regexMessage>
                                         </requireProperty>
                                     </rules>
                                 </configuration>
@@ -298,6 +303,7 @@
                                         <dependencyExclude>${selenium.safari.driver}</dependencyExclude>
                                         <dependencyExclude>${codeborne.phantomjs.driver}</dependencyExclude>
                                         <dependencyExclude>${opera.opera.driver}</dependencyExclude>
+                                        <dependencyExclude>${selenium.edge.driver}</dependencyExclude>
                                     </classpathDependencyExcludes>
                                     <skipTests>false</skipTests>
                                 </configuration>
@@ -411,6 +417,21 @@
             <properties>
                 <browser>opera</browser>
                 <opera.opera.driver>dummy</opera.opera.driver>
+            </properties>
+        </profile>
+        <profile>
+            <id>edge</id>
+
+            <activation>
+                <property>
+                    <name>browser</name>
+                    <value>edge</value>
+                </property>
+            </activation>
+
+            <properties>
+                <browser>edge</browser>
+                <selenium.edge.driver>dummy</selenium.edge.driver>
             </properties>
         </profile>
     </profiles>

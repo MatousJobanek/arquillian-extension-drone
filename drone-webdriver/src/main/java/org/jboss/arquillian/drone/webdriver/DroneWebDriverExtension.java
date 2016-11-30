@@ -27,6 +27,7 @@ import org.jboss.arquillian.drone.spi.Instantiator;
 import org.jboss.arquillian.drone.webdriver.augmentation.AugmentingEnhancer;
 import org.jboss.arquillian.drone.webdriver.factory.BrowserCapabilitiesList;
 import org.jboss.arquillian.drone.webdriver.factory.ChromeDriverFactory;
+import org.jboss.arquillian.drone.webdriver.factory.EdgeDriverFactory;
 import org.jboss.arquillian.drone.webdriver.factory.FirefoxDriverFactory;
 import org.jboss.arquillian.drone.webdriver.factory.HtmlUnitDriverFactory;
 import org.jboss.arquillian.drone.webdriver.factory.InternetExplorerDriverFactory;
@@ -43,6 +44,7 @@ import org.jboss.arquillian.drone.webdriver.spi.BrowserCapabilities;
 import org.jboss.arquillian.drone.webdriver.window.WindowResizer;
 
 import static org.jboss.arquillian.drone.webdriver.utils.Constants.CHROME_DRIVER;
+import static org.jboss.arquillian.drone.webdriver.utils.Constants.EDGE_DRIVER;
 import static org.jboss.arquillian.drone.webdriver.utils.Constants.FIREFOX_DRIVER;
 import static org.jboss.arquillian.drone.webdriver.utils.Constants.HTMLUNIT_DRIVER;
 import static org.jboss.arquillian.drone.webdriver.utils.Constants.IE_DRIVER;
@@ -74,6 +76,7 @@ public class DroneWebDriverExtension implements LoadableExtension {
         registerFactoryService(builder, RemoteWebDriverFactory.class, REMOTE_DRIVER);
         registerFactoryService(builder, SafariDriverFactory.class, SAFARI_DRIVER);
         registerFactoryService(builder, PhantomJSDriverFactory.class, PHANTOMJS_DRIVER);
+        registerFactoryService(builder, EdgeDriverFactory.class, EDGE_DRIVER);
 
         builder.observer(BrowserCapabilitiesRegistrar.class);
 
@@ -85,6 +88,7 @@ public class DroneWebDriverExtension implements LoadableExtension {
         builder.service(BrowserCapabilities.class, BrowserCapabilitiesList.Remote.class);
         builder.service(BrowserCapabilities.class, BrowserCapabilitiesList.Safari.class);
         builder.service(BrowserCapabilities.class, BrowserCapabilitiesList.PhantomJS.class);
+        builder.service(BrowserCapabilities.class, BrowserCapabilitiesList.Edge.class);
 
         builder.observer(ReusableRemoteWebDriverExtension.class);
         builder.service(ReusedSessionPermanentStorage.class, ReusedSessionPermanentFileStorage.class);
