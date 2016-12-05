@@ -67,7 +67,7 @@ public class ReusableRemoteWebDriver extends RemoteWebDriver {
     public static RemoteWebDriver fromReusedSession(URL remoteAddress, Capabilities desiredCapabilities, SessionId sessionId)
             throws UnableReuseSessionException {
 
-        RemoteWebDriver driver = new ReusableRemoteWebDriver(new HttpCommandExecutor(remoteAddress), desiredCapabilities,
+        RemoteWebDriver driver = new ReusableRemoteWebDriver(remoteAddress, desiredCapabilities,
                 sessionId);
         checkReusability(sessionId, driver);
         return driver;
@@ -80,8 +80,17 @@ public class ReusableRemoteWebDriver extends RemoteWebDriver {
     protected ReusableRemoteWebDriver(CommandExecutor executor, Capabilities capabilities, SessionId sessionId) {
         super();
         setCommandExecutor(executor);
-        setSessionId(sessionId.toString());
         setReusedCapabilities(capabilities);
+        setSessionId(sessionId.toString());
+    }
+
+    protected ReusableRemoteWebDriver(URL remoteAddress, Capabilities capabilities, SessionId sessionId) {
+        super();
+        setCommandExecutor(new HttpCommandExecutor(remoteAddress));
+        setReusedCapabilities(capabilities);
+
+        startSession(capabilities);
+        setSessionId(sessionId.toString());
     }
 
     /**
