@@ -99,6 +99,13 @@ spacelift {
             home "iedriver-${version}"
             extractMapper { toDir(home).cutdirs() }
         }
+        edgeDriver {
+            product 'egde-driver'
+            remoteUrl "https://download.microsoft.com/download/3/2/D/32D3E464-F2EF-490F-841B-05D53C848D15/MicrosoftWebDriver.exe"
+            home "edge-driver"
+            autoExtract false
+        }
+
 
         // this installation can be used if there is a need to test against not yet release version of arquillian-phantom-driver
         arquillianPhantomDriver {
@@ -139,6 +146,7 @@ spacelift {
                         .parameters(
                             "-Dphantomjs.binary.path=${phantomjsPath}",
                             "-Dwebdriver.ie.driver=${iedriver.home}/IEDriverServer.exe",
+                            "-Dwebdriver.edge.driver=${edgeDriver.home}/${edgeDriver.fileName}",
                             '-jar',
                             "${selenium.home}/${selenium.fileName}"))
                     .workingDir("${project.spacelift.workspace}")
@@ -153,6 +161,7 @@ spacelift {
                     .property("version.arquillian.core=${arqVersion}")
                     .property("phantomjs.binary.path=${phantomjsPath}")
                     .property("webdriver.ie.driver=${iedriver.home}/IEDriverServer.exe")
+                    .property("webdriver.edge.driver=${edgeDriver.home}/${edgeDriver.fileName}")
                     .property("browser=${browserType}")
                     .goals('clean', 'verify').execute().await()
             }
