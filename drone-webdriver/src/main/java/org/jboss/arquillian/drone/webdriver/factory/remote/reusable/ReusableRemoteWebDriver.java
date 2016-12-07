@@ -69,6 +69,8 @@ public class ReusableRemoteWebDriver extends RemoteWebDriver {
 
         RemoteWebDriver driver = new ReusableRemoteWebDriver(remoteAddress, desiredCapabilities,
                 sessionId);
+
+
         checkReusability(sessionId, driver);
         return driver;
     }
