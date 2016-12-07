@@ -23,6 +23,7 @@ import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.remote.CommandExecutor;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.Dialect;
 import org.openqa.selenium.remote.HttpCommandExecutor;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.SessionId;
@@ -88,10 +89,13 @@ public class ReusableRemoteWebDriver extends RemoteWebDriver {
 
     protected ReusableRemoteWebDriver(URL remoteAddress, Capabilities capabilities, SessionId sessionId) {
         super();
-        setCommandExecutor(new HttpCommandExecutor(remoteAddress));
+        HttpCommandExecutor httpCommandExecutor = new HttpCommandExecutor(remoteAddress);
+        setCommandExecutor(httpCommandExecutor);
         setReusedCapabilities(capabilities);
 
-        startSession(capabilities);
+        setValueToFieldInHttpCommandExecutor(httpCommandExecutor, "commandCodec", Dialect.OSS.getCommandCodec());
+        setValueToFieldInHttpCommandExecutor(httpCommandExecutor, "responseCodec", Dialect.OSS.getResponseCodec());
+
         setSessionId(sessionId.toString());
     }
 
@@ -116,6 +120,11 @@ public class ReusableRemoteWebDriver extends RemoteWebDriver {
     void setReusedCapabilities(Capabilities capabilities) {
         Field capabilitiesField = getFieldSafely(this, RemoteWebDriver.class, "capabilities");
         writeValueToField(this, capabilitiesField, capabilities);
+    }
+
+    void setValueToFieldInHttpCommandExecutor(Object instance, String fieldName, Object value) {
+        Field field = getFieldSafely(instance, HttpCommandExecutor.class, fieldName);
+        writeValueToField(instance, field, value);
     }
 
     private static Field getFieldSafely(Object object, Class<?> clazz, String fieldName) {
