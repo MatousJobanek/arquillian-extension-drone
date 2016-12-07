@@ -91,8 +91,8 @@ public class ReusableRemoteWebDriver extends RemoteWebDriver {
         setCommandExecutor(httpCommandExecutor);
         setReusedCapabilities(capabilities);
 
-        setValueToFieldInHttpCommandExecutor(httpCommandExecutor, "commandCodec", Dialect.OSS.getCommandCodec());
-        setValueToFieldInHttpCommandExecutor(httpCommandExecutor, "responseCodec", Dialect.OSS.getResponseCodec());
+        setValueToFieldInHttpCommandExecutor(httpCommandExecutor, "commandCodec", Dialect.W3C.getCommandCodec());
+        setValueToFieldInHttpCommandExecutor(httpCommandExecutor, "responseCodec", Dialect.W3C.getResponseCodec());
 
         setSessionId(sessionId.toString());
     }
