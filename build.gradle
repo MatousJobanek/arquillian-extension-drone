@@ -60,7 +60,7 @@ spacelift {
     }
     profiles {
         "default" {
-            enabledInstallations 'selenium', 'phantomjs', 'iedriver'
+            enabledInstallations 'selenium', 'phantomjs', 'iedriver', 'egde-driver'
             tests '*'            
         }
     }
