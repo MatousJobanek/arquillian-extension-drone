@@ -86,6 +86,8 @@ public class WebDriverConfiguration implements DroneConfiguration<WebDriverConfi
 
     private BrowserCapabilities _browser;
 
+    private String platform;
+
     public WebDriverConfiguration(BrowserCapabilities browser) {
         if (browser != null) {
             this._browser = browser;
@@ -225,5 +227,13 @@ public class WebDriverConfiguration implements DroneConfiguration<WebDriverConfi
 
     public void setDimensions(String dimensions) {
         this.dimensions = dimensions;
+    }
+
+    public String getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(String platform) {
+        this.platform = platform;
     }
 }

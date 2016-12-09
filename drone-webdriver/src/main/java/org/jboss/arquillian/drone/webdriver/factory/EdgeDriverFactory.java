@@ -39,6 +39,24 @@ public class EdgeDriverFactory extends AbstractWebDriverFactory<EdgeDriver> impl
             SecurityActions.setProperty(EDGE_DRIVER_BINARY_KEY, edgeDriverBinary);
         }
 
+        configuration.setPlatform("WIN10");
+
+        System.err.println("============================");
+        System.err.println("============================");
+        System.err.println("============================");
+        System.err.println("============================");
+        System.err.println("============================");
+        System.err.println("============================");
+        System.err.println("============================");
+        System.err.println("============================");
+        System.err.println("============================");
+        System.err.println("============================");
+        System.err.println("============================");
+        System.err.println("============================");
+        System.err.println("============================");
+        System.err.println("============================");
+        System.err.println(SecurityActions.getProperty(EDGE_DRIVER_BINARY_KEY));
+
         return SecurityActions.newInstance(configuration.getImplementationClass(), new Class<?>[] { Capabilities.class },
                 new Object[] { getCapabilities(configuration, true) }, EdgeDriver.class);
     }
