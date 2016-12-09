@@ -6,6 +6,7 @@ import org.jboss.arquillian.drone.spi.Instantiator;
 import org.jboss.arquillian.drone.webdriver.configuration.WebDriverConfiguration;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class EdgeDriverFactory extends AbstractWebDriverFactory<EdgeDriver> implements
         Configurator<EdgeDriver, WebDriverConfiguration>, Instantiator<EdgeDriver, WebDriverConfiguration>,
@@ -40,6 +41,7 @@ public class EdgeDriverFactory extends AbstractWebDriverFactory<EdgeDriver> impl
         }
 
         configuration.setPlatform("WIN10");
+        Capabilities capabilities = getCapabilities(configuration, true);
 
         System.err.println("============================");
         System.err.println("============================");
@@ -58,7 +60,7 @@ public class EdgeDriverFactory extends AbstractWebDriverFactory<EdgeDriver> impl
         System.err.println(SecurityActions.getProperty(EDGE_DRIVER_BINARY_KEY));
 
         return SecurityActions.newInstance(configuration.getImplementationClass(), new Class<?>[] { Capabilities.class },
-                new Object[] { getCapabilities(configuration, true) }, EdgeDriver.class);
+                new Object[] { capabilities }, EdgeDriver.class);
     }
 
     @Override
@@ -67,6 +69,8 @@ public class EdgeDriverFactory extends AbstractWebDriverFactory<EdgeDriver> impl
     }
 
     public Capabilities getCapabilities(WebDriverConfiguration configuration, boolean performValidations) {
-        return configuration.getCapabilities();
+        DesiredCapabilities capabilities = new DesiredCapabilities(configuration.getCapabilities());
+        capabilities.setCapability("platform", "WIN10");
+        return capabilities;
     }
 }
