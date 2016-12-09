@@ -1,5 +1,8 @@
 package org.jboss.arquillian.drone.webdriver.factory;
 
+import java.util.Arrays;
+import java.util.logging.Logger;
+
 import org.jboss.arquillian.drone.spi.Configurator;
 import org.jboss.arquillian.drone.spi.Destructor;
 import org.jboss.arquillian.drone.spi.Instantiator;
@@ -11,6 +14,9 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 public class EdgeDriverFactory extends AbstractWebDriverFactory<EdgeDriver> implements
         Configurator<EdgeDriver, WebDriverConfiguration>, Instantiator<EdgeDriver, WebDriverConfiguration>,
         Destructor<EdgeDriver> {
+
+
+    private static final Logger log = Logger.getLogger(EdgeDriverFactory.class.getName());
 
     private static final String BROWSER_CAPABILITIES = new BrowserCapabilitiesList.Edge().getReadableName();
 
@@ -29,10 +35,10 @@ public class EdgeDriverFactory extends AbstractWebDriverFactory<EdgeDriver> impl
     @Override
     public EdgeDriver createInstance(WebDriverConfiguration configuration) {
 
-        String edgeDriverBinary = configuration.getEdgeDriverBinary();
+        String edgeDriverBinary = SecurityActions.getProperty(EDGE_DRIVER_BINARY_KEY);
 
         if (Validate.empty(edgeDriverBinary)) {
-            edgeDriverBinary = SecurityActions.getProperty(EDGE_DRIVER_BINARY_KEY);
+            edgeDriverBinary = configuration.getEdgeDriverBinary();
         }
 
         if (Validate.nonEmpty(edgeDriverBinary)) {
@@ -43,21 +49,12 @@ public class EdgeDriverFactory extends AbstractWebDriverFactory<EdgeDriver> impl
         configuration.setPlatform("WIN10");
         Capabilities capabilities = getCapabilities(configuration, true);
 
-        System.err.println("============================");
-        System.err.println("============================");
-        System.err.println("============================");
-        System.err.println("============================");
-        System.err.println("============================");
-        System.err.println("============================");
-        System.err.println("============================");
-        System.err.println("============================");
-        System.err.println("============================");
-        System.err.println("============================");
-        System.err.println("============================");
-        System.err.println("============================");
-        System.err.println("============================");
-        System.err.println("============================");
-        System.err.println(SecurityActions.getProperty(EDGE_DRIVER_BINARY_KEY));
+        log.severe("============================");
+        log.severe(SecurityActions.getProperty(EDGE_DRIVER_BINARY_KEY));
+
+        log.severe("============================");
+        log.severe(SecurityActions.getProperty(capabilities.getPlatform().name()));
+        log.severe(Arrays.asList(capabilities.getPlatform().getPartOfOsName()).toString());
 
         return SecurityActions.newInstance(configuration.getImplementationClass(), new Class<?>[] { Capabilities.class },
                 new Object[] { capabilities }, EdgeDriver.class);
