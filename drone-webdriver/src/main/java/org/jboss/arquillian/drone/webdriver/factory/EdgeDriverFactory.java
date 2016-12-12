@@ -67,7 +67,7 @@ public class EdgeDriverFactory extends AbstractWebDriverFactory<EdgeDriver> impl
 
     public Capabilities getCapabilities(WebDriverConfiguration configuration, boolean performValidations) {
         DesiredCapabilities capabilities = new DesiredCapabilities(configuration.getCapabilities());
-        capabilities.setCapability("platform", "WIN10");
+        capabilities.setCapability("platform", "win10");
         return capabilities;
     }
 }
