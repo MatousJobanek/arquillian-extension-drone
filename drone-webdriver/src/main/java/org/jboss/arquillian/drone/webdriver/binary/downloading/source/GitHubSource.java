@@ -88,6 +88,7 @@ public abstract class GitHubSource implements ExternalBinarySource {
     }
 
     private JsonElement sentGetRequest(String url) throws Exception {
+        System.err.println("send and get: " + url);
 
         JsonElement result = sentGetRequestWithPagination(url, 1, JsonElement.class);
 
