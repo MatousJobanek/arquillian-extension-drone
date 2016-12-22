@@ -36,12 +36,12 @@ public class Constants {
     public static final String SAFARI_DRIVER = "org.openqa.selenium.safari.SafariDriver";
     public static final String PHANTOMJS_DRIVER = "org.openqa.selenium.phantomjs.PhantomJSDriver";
 
-    public static String ARQUILLIAN_DRONE_CACHE_DIRECTORY =
+    public static final String ARQUILLIAN_DRONE_CACHE_DIRECTORY =
         System.getProperty("user.home") + File.separator
             + ".arquillian" + File.separator
             + "drone" + File.separator;
 
-    public static String DRONE_TARGET_DIRECTORY =
+    public static final String DRONE_TARGET_DIRECTORY =
         "target" + File.separator + "drone" + File.separator;
 }
 

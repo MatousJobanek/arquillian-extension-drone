@@ -3,6 +3,7 @@ package org.jboss.arquillian.drone.webdriver.binary.handler;
 import java.io.File;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 import org.arquillian.spacelift.Spacelift;
 import org.arquillian.spacelift.execution.Execution;
@@ -11,7 +12,7 @@ import org.arquillian.spacelift.process.CommandBuilder;
 import org.arquillian.spacelift.process.ProcessResult;
 import org.arquillian.spacelift.task.os.CommandTool;
 import org.jboss.arquillian.drone.webdriver.binary.downloading.source.ExternalBinarySource;
-import org.jboss.arquillian.drone.webdriver.binary.downloading.source.StorageSource;
+import org.jboss.arquillian.drone.webdriver.binary.downloading.source.SeleniumGoogleStorageSource;
 import org.jboss.arquillian.drone.webdriver.binary.process.BinaryInteraction;
 import org.jboss.arquillian.drone.webdriver.factory.BrowserCapabilitiesList;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -23,6 +24,8 @@ public class SeleniumServerBinaryHandler extends AbstractBinaryHandler {
 
     private static final String SELENIUM_SERVER_VERSION_PROPERTY = "seleniumServerVersion";
     private static final String SELENIUM_SERVER_URL_PROPERTY = "seleniumServerUrl";
+
+    private Logger log = Logger.getLogger(SeleniumServerBinaryHandler.class.toString());
 
     private DesiredCapabilities capabilities;
 
@@ -77,6 +80,7 @@ public class SeleniumServerBinaryHandler extends AbstractBinaryHandler {
         try {
             CountDownLatch countDownLatch = new CountDownLatch(1);
             Command build = javaCommand.parameters("-jar", seleniumServer).build();
+            log.info("Running Selenium server process: " + build.toString());
             Execution<ProcessResult> server = Spacelift
                 .task(CommandTool.class)
                 .command(build)
@@ -133,12 +137,11 @@ public class SeleniumServerBinaryHandler extends AbstractBinaryHandler {
         return "";
     }
 
-    private class SeleniumServerStorage extends StorageSource {
+    static class SeleniumServerStorage extends SeleniumGoogleStorageSource {
 
         private String version;
 
         SeleniumServerStorage(String version) {
-            super("http://selenium-release.storage.googleapis.com/");
             this.version = version;
         }
 
@@ -151,7 +154,7 @@ public class SeleniumServerBinaryHandler extends AbstractBinaryHandler {
             if (version == null) {
                 regex = String.format(regexBuffer.toString(), directory, directory + ".*");
             } else {
-                regex = String.format(regexBuffer.toString(), version.substring(0, version.lastIndexOf(".")), version);
+                regex = String.format(regexBuffer.toString(), getDirectoryFromFullVersion(version), version);
             }
             return regex;
         }

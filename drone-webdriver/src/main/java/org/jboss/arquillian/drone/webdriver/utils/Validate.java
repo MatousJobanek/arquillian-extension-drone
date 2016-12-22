@@ -86,7 +86,11 @@ public class Validate {
 
         File file = new File(path);
 
-        if (!file.exists() || !fileExecutableChecker.canExecute(file)) {
+        if (!file.exists()) {
+            throw new IllegalArgumentException(String.format("The file %s does not exist", path));
+        }
+
+        if (!fileExecutableChecker.canExecute(file)) {
             throw new IllegalArgumentException(message);
         }
     }

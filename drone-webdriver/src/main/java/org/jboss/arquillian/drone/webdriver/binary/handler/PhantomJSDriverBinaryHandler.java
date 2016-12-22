@@ -28,6 +28,7 @@ public class PhantomJSDriverBinaryHandler extends AbstractBinaryHandler {
             executablePath = PropertySecurityAction.getProperty(PHANTOMJS_EXECUTABLE_PATH_PROPERTY);
         }
 
+        // TODO: fixme - rewrite to use download feature implemented in drone
         if (Validate.empty(executablePath)) {
             capabilities.setCapability(PHANTOMJS_EXECUTABLE_PATH_PROPERTY, new File("target/drone-phantomjs").getAbsolutePath());
         }
@@ -47,7 +48,7 @@ public class PhantomJSDriverBinaryHandler extends AbstractBinaryHandler {
 
     @Override
     public String getSystemBinaryProperty() {
-        return null;
+        return PHANTOMJS_EXECUTABLE_PATH_PROPERTY;
     }
 
     @Override

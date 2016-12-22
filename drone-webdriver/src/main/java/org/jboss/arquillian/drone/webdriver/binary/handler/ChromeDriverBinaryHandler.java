@@ -3,7 +3,7 @@ package org.jboss.arquillian.drone.webdriver.binary.handler;
 import java.util.regex.Pattern;
 
 import org.jboss.arquillian.drone.webdriver.binary.downloading.source.ExternalBinarySource;
-import org.jboss.arquillian.drone.webdriver.binary.downloading.source.StorageSource;
+import org.jboss.arquillian.drone.webdriver.binary.downloading.source.GoogleStorageSource;
 import org.jboss.arquillian.drone.webdriver.factory.BrowserCapabilitiesList;
 import org.jboss.arquillian.phantom.resolver.maven.PlatformUtils;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -59,7 +59,7 @@ public class ChromeDriverBinaryHandler extends AbstractBinaryHandler {
         return CHROME_SYSTEM_DRIVER_BINARY_PROPERTY;
     }
 
-    private class ChromeStorageSources extends StorageSource {
+    private class ChromeStorageSources extends GoogleStorageSource {
 
         ChromeStorageSources(String baseUrl) {
             super(baseUrl, baseUrl + "LATEST_RELEASE");

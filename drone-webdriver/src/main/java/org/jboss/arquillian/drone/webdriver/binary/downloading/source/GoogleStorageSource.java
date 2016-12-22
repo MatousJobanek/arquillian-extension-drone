@@ -24,9 +24,9 @@ import static org.jboss.arquillian.drone.webdriver.utils.HttpUtils.sentGetReques
 /**
  * @author <a href="mailto:mjobanek@redhat.com">Matous Jobanek</a>
  */
-public abstract class StorageSource implements ExternalBinarySource {
+public abstract class GoogleStorageSource implements ExternalBinarySource {
 
-    private Logger log = Logger.getLogger(StorageSource.class.toString());
+    private Logger log = Logger.getLogger(GoogleStorageSource.class.toString());
 
     private String storageUrl;
     private String urlToLatestRelease;
@@ -34,11 +34,11 @@ public abstract class StorageSource implements ExternalBinarySource {
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     private String latestVersion;
 
-    public StorageSource(String storageUrl) {
+    public GoogleStorageSource(String storageUrl) {
         this.storageUrl = storageUrl;
     }
 
-    public StorageSource(String storageUrl, String urlToLatestRelease) {
+    public GoogleStorageSource(String storageUrl, String urlToLatestRelease) {
         this.urlToLatestRelease = urlToLatestRelease;
         this.storageUrl = storageUrl;
     }
@@ -99,9 +99,7 @@ public abstract class StorageSource implements ExternalBinarySource {
         retrieveContents();
         List<Content> matched = contents
             .stream()
-            .filter(content -> {
-                return content.getKey().matches(getExpectedKeyRegex(requiredVersion, content.getDirectory()));
-            })
+            .filter(content -> content.getKey().matches(getExpectedKeyRegex(requiredVersion, content.getDirectory())))
             .collect(Collectors.toList());
 
         if (matched.size() == 0) {

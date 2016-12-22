@@ -2,23 +2,22 @@ package org.jboss.arquillian.drone.webdriver.binary.downloading.source;
 
 import java.net.URI;
 import java.util.Iterator;
+import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
 import org.jboss.arquillian.drone.webdriver.binary.downloading.ExternalBinary;
+import org.jboss.arquillian.drone.webdriver.utils.HttpUtils;
 
 /**
  * @author <a href="mailto:mjobanek@redhat.com">Matous Jobanek</a>
  */
 public abstract class GitHubSource implements ExternalBinarySource {
+
+    private Logger log = Logger.getLogger(GitHubSource.class.toString());
 
     private String projectUrl;
 
@@ -66,6 +65,7 @@ public abstract class GitHubSource implements ExternalBinarySource {
                 return binaryRelease;
             }
         }
+        log.warning("There wasn't found any release for the version: " + version + " in the repository: " + projectUrl);
         return null;
     }
 
@@ -109,11 +109,8 @@ public abstract class GitHubSource implements ExternalBinarySource {
     }
 
     private <T> T sentGetRequestWithPagination(String url, int pageNumber, Class<T> expectedType) throws Exception {
-        CloseableHttpClient client = HttpClientBuilder.create().build();
         URI uri = new URIBuilder(url).setParameter("page", String.valueOf(pageNumber)).build();
-        HttpGet request = new HttpGet(uri);
-        HttpResponse result = client.execute(request);
-        String json = EntityUtils.toString(result.getEntity(), "UTF-8");
+        String json = HttpUtils.sentGetRequest(uri.toString());
         Gson gson = new Gson();
         return gson.fromJson(json, expectedType);
     }

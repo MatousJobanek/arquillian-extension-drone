@@ -18,9 +18,9 @@ import static org.jboss.arquillian.drone.webdriver.utils.Constants.DRONE_TARGET_
 /**
  * @author <a href="mailto:mjobanek@redhat.com">Matous Jobanek</a>
  */
-public class UncompressTool {
+public class BinaryFilesUtils {
 
-    private static Logger log = Logger.getLogger(UncompressTool.class.toString());
+    private static Logger log = Logger.getLogger(BinaryFilesUtils.class.toString());
 
     public static File extract(File toExtract) throws Exception {
 
@@ -31,6 +31,7 @@ public class UncompressTool {
         File targetDir = new File(DRONE_TARGET_DIRECTORY + File.separator + dir);
         if (!targetDir.exists() || targetDir.listFiles(file -> file.isFile()).length == 0) {
 
+            targetDir.mkdirs();
             String filePath = toExtract.getAbsolutePath();
 
             log.info("Extracting zip file: " + toExtract + " to " + targetDir.getPath());
@@ -55,7 +56,7 @@ public class UncompressTool {
         return targetDir;
     }
 
-    private static String getMd5hash(File file) {
+    public static String getMd5hash(File file) {
         FileInputStream fis = null;
         try {
             fis = new FileInputStream(file);

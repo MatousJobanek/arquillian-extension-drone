@@ -3,7 +3,7 @@ package org.jboss.arquillian.drone.webdriver.binary.handler;
 import java.io.File;
 
 import org.jboss.arquillian.drone.webdriver.binary.downloading.source.ExternalBinarySource;
-import org.jboss.arquillian.drone.webdriver.binary.downloading.source.StorageSource;
+import org.jboss.arquillian.drone.webdriver.binary.downloading.source.SeleniumGoogleStorageSource;
 import org.jboss.arquillian.drone.webdriver.factory.BrowserCapabilitiesList;
 import org.jboss.arquillian.phantom.resolver.maven.PlatformUtils;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -62,12 +62,11 @@ public class InternetExplorerBinaryHandler extends AbstractBinaryHandler {
     }
 
 
-    private class IeStorageSource extends StorageSource {
+    static class IeStorageSource extends SeleniumGoogleStorageSource {
 
         private String version;
 
-        IeStorageSource(String version) {
-            super("http://selenium-release.storage.googleapis.com/");
+        protected IeStorageSource(String version) {
             this.version = version;
         }
 
@@ -85,7 +84,7 @@ public class InternetExplorerBinaryHandler extends AbstractBinaryHandler {
             if (version == null) {
                 regex = String.format(regexBuffer.toString(), directory, directory + ".*");
             } else {
-                regex = String.format(regexBuffer.toString(), version.substring(0, version.lastIndexOf(".")), version);
+                regex = String.format(regexBuffer.toString(), getDirectoryFromFullVersion(version), version);
             }
             return regex;
         }

@@ -18,7 +18,8 @@ public class Downloader {
 
     private static Logger log = Logger.getLogger(Downloader.class.toString());
 
-    public static String DRONE_TARGET_DOWNLOADED_DIRECTORY = DRONE_TARGET_DIRECTORY + "downloaded" + File.separator;
+    public static final String DRONE_TARGET_DOWNLOADED_DIRECTORY =
+        DRONE_TARGET_DIRECTORY + "downloaded" + File.separator;
 
     public static File download(File targetDir, URL from) {
         if (targetDir == null){
@@ -26,19 +27,20 @@ public class Downloader {
         }
         String fromUrl = from.toString();
         String fileName = fromUrl.substring(fromUrl.lastIndexOf("/") + 1);
-        String target = targetDir + File.separator + fileName;
+        File target = new File(targetDir + File.separator + fileName);
         File downloaded = null;
 
-        for (File file : targetDir.listFiles()) {
-            if (file.getAbsolutePath().equals(target)) {
-                downloaded = file;
-            }
+        if (target.exists() && target.isFile()) {
+            downloaded = target;
+        } else if (!targetDir.exists()) {
+            targetDir.mkdirs();
         }
+
         if (downloaded == null) {
 
             for (int i = 0; i < 3; i++) {
                 try {
-                    downloaded = runDownloadExecution(from, target, fileName).await();
+                    downloaded = runDownloadExecution(from, target.getAbsolutePath(), fileName).await();
                 } catch (ExecutionException ee) {
                     System.err.print("ERROR: the downloading has failed. ");
                     if (2 - i > 0) {

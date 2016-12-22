@@ -4,7 +4,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.logging.Logger;
 
-import org.jboss.arquillian.drone.webdriver.binary.UncompressTool;
+import org.jboss.arquillian.drone.webdriver.binary.BinaryFilesUtils;
 import org.jboss.arquillian.drone.webdriver.binary.downloading.Downloader;
 import org.jboss.arquillian.drone.webdriver.binary.downloading.ExternalBinary;
 import org.jboss.arquillian.drone.webdriver.binary.downloading.source.ExternalBinarySource;
@@ -20,7 +20,7 @@ public abstract class AbstractBinaryHandler implements BinaryHandler {
 
     private Logger log = Logger.getLogger(this.getClass().toString());
 
-    private static String DOWNLOAD_BINARIES_PROPERTY = "downloadBinaries";
+    public static final String DOWNLOAD_BINARIES_PROPERTY = "downloadBinaries";
 
     public String checkAndSetBinary(boolean performExecutableValidations) {
         String driverBinary = PropertySecurityAction.getProperty(getSystemBinaryProperty());
@@ -100,7 +100,7 @@ public abstract class AbstractBinaryHandler implements BinaryHandler {
 
     protected File downloadAndPrepare(File targetDir, URL from) throws Exception {
         File downloaded = Downloader.download(targetDir, from);
-        File extraction = UncompressTool.extract(downloaded);
+        File extraction = BinaryFilesUtils.extract(downloaded);
         File[] files = extraction.listFiles(file -> file.isFile());
         if (files.length == 0) {
             throw new IllegalStateException(
