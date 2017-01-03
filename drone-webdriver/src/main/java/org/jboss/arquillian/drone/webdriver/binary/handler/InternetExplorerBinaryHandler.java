@@ -5,7 +5,6 @@ import java.io.File;
 import org.jboss.arquillian.drone.webdriver.binary.downloading.source.ExternalBinarySource;
 import org.jboss.arquillian.drone.webdriver.binary.downloading.source.SeleniumGoogleStorageSource;
 import org.jboss.arquillian.drone.webdriver.factory.BrowserCapabilitiesList;
-import org.jboss.arquillian.phantom.resolver.maven.PlatformUtils;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 /**
@@ -75,11 +74,11 @@ public class InternetExplorerBinaryHandler extends AbstractBinaryHandler {
         @Override
         protected String getExpectedKeyRegex(String requiredVersion, String directory) {
             StringBuffer regexBuffer = new StringBuffer("%s/IEDriverServer_");
-            if (PlatformUtils.is32()) {
+//            if (PlatformUtils.is32()) {
                 regexBuffer.append("Win32");
-            } else {
-                regexBuffer.append("x64");
-            }
+//            } else {
+//                regexBuffer.append("x64");
+//            }
             regexBuffer.append("_%s.zip");
 
             String regex;
