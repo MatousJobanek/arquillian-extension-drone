@@ -21,6 +21,7 @@ import org.jboss.arquillian.drone.webdriver.utils.Validate;
 import org.jboss.arquillian.phantom.resolver.maven.PlatformUtils;
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -211,7 +212,17 @@ public class BinaryHandlerTestCase {
         capabilities.setCapability(
             LocalBinaryHandler.LOCAL_SOURCE_BINARY_VERSION_PROPERTY,
             LocalBinarySource.FIRST_VERSION);
-        new LocalBinaryHandler(capabilities).checkAndSetBinary(true);
+
+        try {
+            new LocalBinaryHandler(capabilities).checkAndSetBinary(true);
+            if (!PlatformUtils.isWindows()){
+                Assert.fail("This test should have failed on all platforms but Windows");
+            }
+        } catch (IllegalArgumentException iae){
+            if (PlatformUtils.isWindows()){
+                Assert.fail("This test should have not failed on Windows");
+            }
+        }
     }
 
     private void verifyIsDownloadedExtractedSetExecutableSetInSystemProperty(DesiredCapabilities capabilities,
