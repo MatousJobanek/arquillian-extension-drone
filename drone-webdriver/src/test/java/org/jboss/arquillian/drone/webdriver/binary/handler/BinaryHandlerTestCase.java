@@ -18,6 +18,7 @@ import org.jboss.arquillian.drone.webdriver.binary.downloading.source.LocalBinar
 import org.jboss.arquillian.drone.webdriver.binary.process.BinaryInteraction;
 import org.jboss.arquillian.drone.webdriver.utils.Constants;
 import org.jboss.arquillian.drone.webdriver.utils.Validate;
+import org.jboss.arquillian.phantom.resolver.maven.PlatformUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -52,7 +53,10 @@ public class BinaryHandlerTestCase {
     }
 
     private void cleanUp() throws IOException {
-        FileUtils.deleteDirectory(new File(TEST_ARQUILLIAN_DRONE_CACHE_DIRECTORY).getParentFile());
+        File targetDroneDir = new File(TEST_ARQUILLIAN_DRONE_CACHE_DIRECTORY).getParentFile();
+        if (targetDroneDir.exists()) {
+            FileUtils.deleteDirectory(targetDroneDir);
+        }
         System.setProperty(LocalBinaryHandler.LOCAL_SOURCE_SYSTEM_BINARY_PROPERTY, "");
         System.setProperty(LocalBinaryHandler.LOCAL_SOURCE_BINARY_PROPERTY, "");
     }
@@ -229,7 +233,9 @@ public class BinaryHandlerTestCase {
                               "The file has to be an executable file, " + resultingFile);
         assertThat(System.getProperty(LocalBinaryHandler.LOCAL_SOURCE_SYSTEM_BINARY_PROPERTY)).isEqualTo(extracted);
 
-        runScriptAndCheck(extracted, echo);
+        if (!PlatformUtils.isWindows()) {
+            runScriptAndCheck(extracted, echo);
+        }
     }
 
     private void runScriptAndCheck(String script, String expected) {
