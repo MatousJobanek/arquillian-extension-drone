@@ -201,7 +201,7 @@ public class BinaryHandlerTestCase {
         assertThat(binary).isEqualTo(first.getAbsolutePath());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void verifyWithPropertySetToZip() throws Exception {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         // set binary to zip - test should throw an exception
