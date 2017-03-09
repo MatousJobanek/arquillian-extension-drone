@@ -30,6 +30,12 @@
       <tag>HEAD</tag>
   </scm>
 
+    <repositories>
+        <repository>
+            <id>jboss-nexus-released</id>
+            <url>https://repository.jboss.org/nexus/service/local/repositories/releases/content/</url>
+        </repository>
+    </repositories>
 
     <developers>
         <developer>
