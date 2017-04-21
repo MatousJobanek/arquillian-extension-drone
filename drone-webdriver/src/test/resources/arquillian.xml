@@ -12,6 +12,8 @@
 
     <property name="dimensions">1300x500</property>
 
+    <property name="chromeArguments">--headless</property>
+
     <!-- All these capabilities are related to Firefox only -->
     <property name="webdriver.firefox.profile">selenium</property>
     <property name="firefoxUserPreferences">target/test-classes/prefs.js</property>
@@ -24,6 +26,7 @@
   <extension qualifier="webdriver-reusable">
     <!-- browser is set externally -->
     <property name="browser">${browser}</property>
+    <property name="chromeArguments">--headless</property>
 
     <property name="phantomjsBinaryVersion">${default.supported.phantomjs.binary.version}</property>
 
@@ -45,6 +48,7 @@
   <extension qualifier="webdriver-reusecookies">
     <!-- browser is set externally -->
     <property name="browser">${browser}</property>
+    <property name="chromeArguments">--headless</property>
 
     <property name="phantomjsBinaryVersion">${default.supported.phantomjs.binary.version}</property>
 
