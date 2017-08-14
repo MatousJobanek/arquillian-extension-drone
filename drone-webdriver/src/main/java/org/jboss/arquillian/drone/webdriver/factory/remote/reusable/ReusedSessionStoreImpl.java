@@ -177,11 +177,11 @@ public class ReusedSessionStoreImpl implements ReusedSessionStore {
             try {
                 return SerializationUtils.deserializeFromBytes(classType, raw);
             } catch (ClassNotFoundException e) {
-                log.log(Level.FINE, "Unable to deserialize object of " + classType.getName(), e);
+                log.log(Level.WARNING, "Unable to deserialize object of " + classType.getName(), e);
             } catch (IOException e) {
-                log.log(Level.FINE, "Unable to deserialize object of " + classType.getName(), e);
+                log.log(Level.WARNING, "Unable to deserialize object of " + classType.getName(), e);
             } catch (ClassCastException e) {
-                log.log(Level.FINE, "Unable to deserialize object of " + classType.getName(), e);
+                log.log(Level.WARNING, "Unable to deserialize object of " + classType.getName(), e);
             }
 
             return null;
